@@ -3,8 +3,8 @@ defmodule Heatwave.Repo.Migrations.CreateTemperatures do
 
   def change do
     create table(:temperatures) do
-      add :sensor, :string
-      add :value, :float
+      add :sensor, :string, null: false
+      add :value, :float, null: false
 
       timestamps(type: :utc_datetime)
     end
