@@ -1,42 +1,14 @@
 defmodule HeatwaveWeb.CoreComponents do
-  @moduledoc """
-  Provides core UI components.
-
-  At first glance, this module may seem daunting, but its goal is to provide
-  core building blocks for your application, such as tables, forms, and
-  inputs. The components consist mostly of markup and are well-documented
-  with doc strings and declarative assigns. You may customize and style
-  them in any way you want, based on your application growth and needs.
-
-  The foundation for styling is Tailwind CSS, a utility-first CSS framework,
-  augmented with daisyUI, a Tailwind CSS plugin that provides UI components
-  and themes. Here are useful references:
-
-    * [daisyUI](https://daisyui.com/docs/intro/) - a good place to get
-      started and see the available components.
-
-    * [Tailwind CSS](https://tailwindcss.com) - the foundational framework
-      we build on. You will use it for layout, sizing, flexbox, grid, and
-      spacing.
-
-    * [Heroicons](https://heroicons.com) - see `icon/1` for usage.
-
-    * [Phoenix.Component](https://hexdocs.pm/phoenix_live_view/Phoenix.Component.html) -
-      the component system used by Phoenix. Some components, such as `<.link>`
-      and `<.form>`, are defined there.
-
-  """
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
 
   @doc """
-  Renders flash notices.
-
-  ## Examples
+  Render flash notices.
 
       <.flash kind={:info} flash={@flash} />
       <.flash kind={:info} phx-mounted={show("#flash")}>Welcome Back!</.flash>
+
   """
   attr :id, :string, doc: "the optional id of flash container"
   attr :flash, :map, default: %{}, doc: "the map of flash messages to display"
@@ -79,13 +51,12 @@ defmodule HeatwaveWeb.CoreComponents do
   end
 
   @doc """
-  Renders a button with navigation support.
-
-  ## Examples
+  Render button with navigation support.
 
       <.button>Send!</.button>
       <.button phx-click="go" variant="primary">Send!</.button>
       <.button navigate={~p"/"}>Home</.button>
+
   """
   attr :rest, :global, include: ~w(href navigate patch method download name value disabled)
   attr :class, :string
@@ -116,30 +87,15 @@ defmodule HeatwaveWeb.CoreComponents do
   end
 
   @doc """
-  Renders an input with label and error messages.
+  Render an input with label and error messages.
 
   A `Phoenix.HTML.FormField` may be passed as argument,
   which is used to retrieve the input name, id, and values.
   Otherwise all attributes may be passed explicitly.
 
-  ## Types
-
-  This function accepts all HTML input types, considering that:
-
-    * You may also set `type="select"` to render a `<select>` tag
-
-    * `type="checkbox"` is used exclusively to render boolean values
-
-    * For live file uploads, see `Phoenix.Component.live_file_input/1`
-
-  See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
-  for more information. Unsupported types, such as hidden and radio,
-  are best written directly in your templates.
-
-  ## Examples
-
       <.input field={@form[:email]} type="email" />
       <.input name="my-input" errors={["oh no!"]} />
+
   """
   attr :id, :any, default: nil
   attr :name, :any
@@ -245,7 +201,7 @@ defmodule HeatwaveWeb.CoreComponents do
     """
   end
 
-  # All other inputs text, datetime-local, url, password, etc. are handled here...
+  # All other inputs text, datetime-local, url, password, etc handled here...
   def input(assigns) do
     ~H"""
     <div class="fieldset mb-2">
@@ -268,7 +224,7 @@ defmodule HeatwaveWeb.CoreComponents do
     """
   end
 
-  # Helper used by inputs to generate form errors
+  # Helper used by inputs to generate form errors.
   defp error(assigns) do
     ~H"""
     <p class="mt-1.5 flex gap-2 items-center text-sm text-error">
@@ -279,7 +235,7 @@ defmodule HeatwaveWeb.CoreComponents do
   end
 
   @doc """
-  Renders a header with title.
+  Render a header with title.
   """
   slot :inner_block, required: true
   slot :subtitle
@@ -302,14 +258,13 @@ defmodule HeatwaveWeb.CoreComponents do
   end
 
   @doc """
-  Renders a table with generic styling.
-
-  ## Examples
+  Render a table with generic styling.
 
       <.table id="users" rows={@users}>
         <:col :let={user} label="id">{user.id}</:col>
         <:col :let={user} label="username">{user.username}</:col>
       </.table>
+
   """
   attr :id, :string, required: true
   attr :rows, :list, required: true
@@ -365,14 +320,13 @@ defmodule HeatwaveWeb.CoreComponents do
   end
 
   @doc """
-  Renders a data list.
-
-  ## Examples
+  Render a data list.
 
       <.list>
         <:item title="Title">{@post.title}</:item>
         <:item title="Views">{@post.views}</:item>
       </.list>
+
   """
   slot :item, required: true do
     attr :title, :string, required: true
@@ -392,22 +346,11 @@ defmodule HeatwaveWeb.CoreComponents do
   end
 
   @doc """
-  Renders a [Heroicon](https://heroicons.com).
-
-  Heroicons come in three styles – outline, solid, and mini.
-  By default, the outline style is used, but solid and mini may
-  be applied by using the `-solid` and `-mini` suffix.
-
-  You can customize the size and colors of the icons by setting
-  width, height, and background color classes.
-
-  Icons are extracted from the `deps/heroicons` directory and bundled within
-  your compiled app.css by the plugin in `assets/vendor/heroicons.js`.
-
-  ## Examples
+  Render a [Heroicon](https://heroicons.com).
 
       <.icon name="hero-x-mark" />
       <.icon name="hero-arrow-path" class="ml-1 size-3 motion-safe:animate-spin" />
+
   """
   attr :name, :string, required: true
   attr :class, :string, default: "size-4"
@@ -442,25 +385,16 @@ defmodule HeatwaveWeb.CoreComponents do
   end
 
   @doc """
-  Translates an error message using gettext.
+  Translate an error message using gettext.
   """
   def translate_error({msg, opts}) do
-    # You can make use of gettext to translate error messages by
-    # uncommenting and adjusting the following code:
-
-    # if count = opts[:count] do
-    #   Gettext.dngettext(HeatwaveWeb.Gettext, "errors", msg, msg, count, opts)
-    # else
-    #   Gettext.dgettext(HeatwaveWeb.Gettext, "errors", msg, opts)
-    # end
-
     Enum.reduce(opts, msg, fn {key, value}, acc ->
       String.replace(acc, "%{#{key}}", fn _ -> to_string(value) end)
     end)
   end
 
   @doc """
-  Translates the errors for a field from a keyword list of errors.
+  Translate the errors for a field from keyword list of errors.
   """
   def translate_errors(errors, field) when is_list(errors) do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})

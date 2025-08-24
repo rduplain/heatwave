@@ -1,35 +1,23 @@
 defmodule HeatwaveWeb.Layouts do
-  @moduledoc """
-  This module holds layouts and related functionality
-  used by your application.
-  """
   use HeatwaveWeb, :html
 
-  # Embed all files in layouts/* within this module.
-  # The default root.html.heex file contains the HTML
-  # skeleton of your application, namely HTML headers
-  # and other static content.
   embed_templates "layouts/*"
 
   @doc """
-  Renders your app layout.
+  Render app layout.
 
-  This function is typically invoked from every template,
-  and it often contains your application menu, sidebar,
-  or similar.
-
-  ## Examples
+  Typically invoked from every template, often containing application nav.
 
       <Layouts.app flash={@flash}>
         <h1>Content</h1>
       </Layouts.app>
 
   """
-  attr :flash, :map, required: true, doc: "the map of flash messages"
+  attr :flash, :map, required: true, doc: "map of flash messages"
 
   attr :current_scope, :map,
     default: nil,
-    doc: "the current [scope](https://hexdocs.pm/phoenix/scopes.html)"
+    doc: "current [scope](https://hexdocs.pm/phoenix/scopes.html)"
 
   slot :inner_block, required: true
 
@@ -73,14 +61,13 @@ defmodule HeatwaveWeb.Layouts do
   end
 
   @doc """
-  Shows the flash group with standard titles and content.
-
-  ## Examples
+  Shows flash group with standard titles and content.
 
       <.flash_group flash={@flash} />
+
   """
-  attr :flash, :map, required: true, doc: "the map of flash messages"
-  attr :id, :string, default: "flash-group", doc: "the optional id of flash container"
+  attr :flash, :map, required: true, doc: "map of flash messages"
+  attr :id, :string, default: "flash-group", doc: "optional id of flash container"
 
   def flash_group(assigns) do
     ~H"""
@@ -91,7 +78,7 @@ defmodule HeatwaveWeb.Layouts do
       <.flash
         id="client-error"
         kind={:error}
-        title="We can't find the internet"
+        title="Offline."
         phx-disconnected={show(".phx-client-error #client-error") |> JS.remove_attribute("hidden")}
         phx-connected={hide("#client-error") |> JS.set_attribute({"hidden", ""})}
         hidden
@@ -116,7 +103,7 @@ defmodule HeatwaveWeb.Layouts do
   end
 
   @doc """
-  Provides dark vs light theme toggle based on themes defined in app.css.
+  Provide dark vs light theme toggle based on themes defined in app.css.
 
   See <head> in root.html.heex which applies the theme before page load.
   """

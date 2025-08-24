@@ -1,8 +1,4 @@
 defmodule Heatwave.Application do
-  # See https://hexdocs.pm/elixir/Application.html
-  # for more information on OTP Applications
-  @moduledoc false
-
   use Application
 
   @impl true
@@ -14,20 +10,13 @@ defmodule Heatwave.Application do
        repos: Application.fetch_env!(:heatwave, :ecto_repos), skip: skip_migrations?()},
       {DNSCluster, query: Application.get_env(:heatwave, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Heatwave.PubSub},
-      # Start a worker by calling: Heatwave.Worker.start_link(arg)
-      # {Heatwave.Worker, arg},
-      # Start to serve requests, typically the last entry
       HeatwaveWeb.Endpoint
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Heatwave.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
-  # Tell Phoenix to update the endpoint configuration
-  # whenever the application is updated.
   @impl true
   def config_change(changed, _new, removed) do
     HeatwaveWeb.Endpoint.config_change(changed, removed)
@@ -35,7 +24,6 @@ defmodule Heatwave.Application do
   end
 
   defp skip_migrations?() do
-    # By default, sqlite migrations are run when using a release
     System.get_env("RELEASE_NAME") == nil
   end
 end

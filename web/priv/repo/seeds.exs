@@ -1,11 +1,8 @@
-# Script for populating the database. You can run it as:
+# Seed the database.
 #
 #     mix run priv/repo/seeds.exs
 #
-# Inside the script, you can read and write to any of your
-# repositories directly:
+# Add code to read and write to repositories directly:
 #
 #     Heatwave.Repo.insert!(%Heatwave.SomeSchema{})
 #
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
