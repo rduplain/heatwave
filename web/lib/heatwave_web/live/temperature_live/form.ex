@@ -56,7 +56,9 @@ defmodule HeatwaveWeb.TemperatureLive.Form do
 
   @impl true
   def handle_event("validate", %{"temperature" => temperature_params}, socket) do
-    changeset = TemperatureController.change_temperature(socket.assigns.temperature, temperature_params)
+    changeset =
+      TemperatureController.change_temperature(socket.assigns.temperature, temperature_params)
+
     {:noreply, assign(socket, form: to_form(changeset, action: :validate))}
   end
 
@@ -91,5 +93,4 @@ defmodule HeatwaveWeb.TemperatureLive.Form do
   end
 
   defp return_path("index", _temperature), do: ~p"/temperatures"
-  defp return_path("show", temperature), do: ~p"/temperatures/#{temperature}"
 end

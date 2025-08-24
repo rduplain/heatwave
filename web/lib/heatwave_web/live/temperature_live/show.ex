@@ -14,9 +14,6 @@ defmodule HeatwaveWeb.TemperatureLive.Show do
           <.button navigate={~p"/temperatures"}>
             <.icon name="hero-arrow-left" />
           </.button>
-          <.button variant="primary" navigate={~p"/temperatures/#{@temperature}/edit?return_to=show"}>
-            <.icon name="hero-pencil-square" /> Edit temperature
-          </.button>
         </:actions>
       </.header>
 

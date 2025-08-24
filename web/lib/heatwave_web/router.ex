@@ -18,6 +18,8 @@ defmodule HeatwaveWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    live "/temperatures", TemperatureLive.Index, :index
+    live "/temperatures/new", TemperatureLive.Form, :new
   end
 
   # Note: Add authentication before including LiveDashboard in production.

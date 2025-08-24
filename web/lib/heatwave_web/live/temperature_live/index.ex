@@ -19,16 +19,9 @@ defmodule HeatwaveWeb.TemperatureLive.Index do
       <.table
         id="temperatures"
         rows={@streams.temperatures}
-        row_click={fn {_id, temperature} -> JS.navigate(~p"/temperatures/#{temperature}") end}
       >
         <:col :let={{_id, temperature}} label="Sensor">{temperature.sensor}</:col>
         <:col :let={{_id, temperature}} label="Value">{temperature.value}</:col>
-        <:action :let={{_id, temperature}}>
-          <div class="sr-only">
-            <.link navigate={~p"/temperatures/#{temperature}"}>Show</.link>
-          </div>
-          <.link navigate={~p"/temperatures/#{temperature}/edit"}>Edit</.link>
-        </:action>
         <:action :let={{id, temperature}}>
           <.link
             phx-click={JS.push("delete", value: %{id: temperature.id}) |> hide("##{id}")}
