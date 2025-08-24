@@ -40,17 +40,11 @@ defmodule Heatwave.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.8.0"},
-      {:phoenix_ecto, "~> 4.5"},
+      {:bandit, "~> 1.5"},
+      {:dns_cluster, "~> 0.2.0"},
       {:ecto_sql, "~> 3.13"},
       {:ecto_sqlite3, ">= 0.0.0"},
-      {:phoenix_html, "~> 4.1"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 1.1.0"},
-      {:lazy_html, ">= 0.1.0", only: :test},
-      {:phoenix_live_dashboard, "~> 0.8.3"},
       {:esbuild, "~> 0.10", runtime: Mix.env() == :dev},
-      {:tailwind, "~> 0.3", runtime: Mix.env() == :dev},
       {:heroicons,
        github: "tailwindlabs/heroicons",
        tag: "v2.2.0",
@@ -58,11 +52,17 @@ defmodule Heatwave.MixProject do
        app: false,
        compile: false,
        depth: 1},
-      {:telemetry_metrics, "~> 1.0"},
-      {:telemetry_poller, "~> 1.0"},
       {:jason, "~> 1.2"},
-      {:dns_cluster, "~> 0.2.0"},
-      {:bandit, "~> 1.5"}
+      {:lazy_html, ">= 0.1.0", only: :test},
+      {:phoenix_ecto, "~> 4.5"},
+      {:phoenix_html, "~> 4.1"},
+      {:phoenix_live_dashboard, "~> 0.8.3"},
+      {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:phoenix_live_view, "~> 1.1.0"},
+      {:phoenix, "~> 1.8.0"},
+      {:tailwind, "~> 0.3", runtime: Mix.env() == :dev},
+      {:telemetry_metrics, "~> 1.0"},
+      {:telemetry_poller, "~> 1.0"}
     ]
   end
 
