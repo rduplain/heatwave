@@ -1,4 +1,5 @@
 defmodule HeatwaveWeb.Router do
+  alias HeatwaveWeb.Plugs.SensorKey
   use HeatwaveWeb, :router
 
   pipeline :browser do
@@ -10,13 +11,18 @@ defmodule HeatwaveWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
+  pipeline :ingest do
+    plug :accepts, ["text"]
+    plug SensorKey
   end
 
   scope "/", HeatwaveWeb do
     pipe_through :browser
-
     live "/", HomeLive, :index
+  end
+
+  scope "/", HeatwaveWeb do
+    pipe_through :ingest
+    post "/value", ValueController, :create
   end
 end

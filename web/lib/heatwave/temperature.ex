@@ -9,10 +9,11 @@ defmodule Heatwave.Temperature do
     timestamps(type: :utc_datetime)
   end
 
-  @doc false
   def changeset(temperature, attrs) do
     temperature
     |> cast(attrs, [:sensor, :value])
     |> validate_required([:sensor, :value])
+    |> validate_number(:value, greater_than_or_equal_to: 32)
+    |> validate_number(:value, less_than_or_equal_to: 120)
   end
 end
