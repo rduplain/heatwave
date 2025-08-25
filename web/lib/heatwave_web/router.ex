@@ -17,20 +17,6 @@ defmodule HeatwaveWeb.Router do
   scope "/", HeatwaveWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
-    live "/temperatures", TemperatureLive.Index, :index
-    live "/temperatures/new", TemperatureLive.Form, :new
-  end
-
-  # Note: Add authentication before including LiveDashboard in production.
-  #       e.g. served over HTTPS with Plug.BasicAuth.
-  if Application.compile_env(:heatwave, :dev_routes) do
-    import Phoenix.LiveDashboard.Router
-
-    scope "/dev" do
-      pipe_through :browser
-
-      live_dashboard "/dashboard", metrics: HeatwaveWeb.Telemetry
-    end
+    live "/", HomeLive, :index
   end
 end
