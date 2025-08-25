@@ -1,3 +1,7 @@
+#
+# Status:   Ingest API is ready.
+# Next Up:  Convert this "Hello, world!" to stream real data.
+#
 defmodule HeatwaveWeb.HomeLive do
   use HeatwaveWeb, :live_view
 
