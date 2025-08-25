@@ -1,0 +1,18 @@
+defmodule Heatwave.Sensor do
+  use Ecto.Schema
+  import Ecto.Changeset
+
+  schema "sensors" do
+    field :sensor, :string
+    field :key, :string
+
+    timestamps(type: :utc_datetime)
+  end
+
+  @doc false
+  def changeset(sensor, attrs) do
+    sensor
+    |> cast(attrs, [:sensor, :key])
+    |> validate_required([:sensor, :key])
+  end
+end
