@@ -1,8 +1,4 @@
-# Seed the database.
-#
-#     mix run priv/repo/seeds.exs
-#
-# Add code to read and write to repositories directly:
-#
-#     Heatwave.Repo.insert!(%Heatwave.SomeSchema{})
-#
+# Seed API keys for simulated sensors.
+for i <- 1..9 do
+  Heatwave.Repo.insert!(%Heatwave.Sensor{key: "KEY#{i}", sensor: "sensor#{i}"})
+end
