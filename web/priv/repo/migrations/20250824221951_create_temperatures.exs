@@ -8,5 +8,8 @@ defmodule Heatwave.Repo.Migrations.CreateTemperatures do
 
       timestamps(type: :utc_datetime)
     end
+
+    # Tables never JOIN and are therefore denormalized, no foreign key.
+    create index(:temperatures, [:sensor])
   end
 end

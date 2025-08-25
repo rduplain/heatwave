@@ -3,10 +3,12 @@ defmodule Heatwave.Repo.Migrations.CreateSensors do
 
   def change do
     create table(:sensors) do
-      add :sensor, :string
-      add :key, :string
+      add :sensor, :string, null: false
+      add :key, :string, null: false
 
       timestamps(type: :utc_datetime)
     end
+
+    create unique_index(:sensors, [:key])
   end
 end

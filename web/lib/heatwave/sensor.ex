@@ -14,5 +14,6 @@ defmodule Heatwave.Sensor do
     sensor
     |> cast(attrs, [:sensor, :key])
     |> validate_required([:sensor, :key])
+    |> unique_constraint(:key)
   end
 end
