@@ -16,7 +16,7 @@ enjoy programming on the Erlang runtime.
 * [x] LiveView Integration
 * [x] API Auth Middleware (Plug)
 * [x] Sensor Ingest Endpoint
-* [ ] [WIP] Sensor Simulator
+* [x] Sensor Simulator
 * [ ] [WIP] PubSub Streaming to Chart.js
 
 
