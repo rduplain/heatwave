@@ -9,7 +9,6 @@ defmodule Heatwave.Sensor do
     timestamps(type: :utc_datetime)
   end
 
-  @doc false
   def changeset(sensor, attrs) do
     sensor
     |> cast(attrs, [:sensor, :key])
