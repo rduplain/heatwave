@@ -6,3 +6,15 @@
 @plugin "../vendor/heroicons";
 
 @plugin "../vendor/daisyui";
+
+@plugin "../vendor/daisyui-theme" {
+    name: "dark";
+    default: "true";
+    --root-bg: #000;
+}
+
+@plugin "../vendor/daisyui-theme" {
+    name: "light";
+    default: "false";
+    --root-bg: #fff;
+}
