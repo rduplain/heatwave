@@ -31,6 +31,8 @@ _additional_ errors.
 
 ## Habit 7: Sharpen the Saw
 
+_Exploring Erlang over the years._
+
 **2008.** I reviewed mnesia to better understand the architecture of a project
 where I was lead on creating a low-cost SMS gateway out of an ordinary Android
 phone. I also wanted to better understand emerging NoSQL technologies.
@@ -43,10 +45,14 @@ writing ejabberd modules. It would later be replaced by redis.
 blub. I included Elixir as part of the evaluation, and would ultimately choose
 OCaml. In particular, I need to ship binaries as a systems programmer.
 
-(I would later choose V, in which blub is secondary to the design principle of
+<details>
+<summary>Personal language choice for systems programming.</summary>
+
+I would later choose V, in which blub is secondary to the design principle of
 zero dependencies. A project needs only POSIX and a C compiler, vendoring
 everything including the language runtime. It is otherwise remarkably difficult
-to escape the vast incidental complexity introduced by the toolchain.)
+to escape the vast incidental complexity introduced by the toolchain.
+</details>
 
 **2020-2022.** I needed a UI toolkit for rapid application development in a
 clinical setting for iterative (IRB approved) workflows in managing
