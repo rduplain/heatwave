@@ -1,9 +1,23 @@
 ## Heatwave
 
-Portfolio project of [Elixir][elixir] and [Phoenix LiveView][liveview].
+Portfolio project of [Elixir][elixir] and [Phoenix LiveView][liveview],
+to sharpen skills, practice picking up new technologies quickly, and
+enjoy programming on the Erlang runtime.
 
 [elixir]:   https://elixir-lang.org/
 [liveview]: https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html
+
+
+## Status
+
+* [x] Clean Code
+* [x] Data Model
+* [x] Chart.js Integration
+* [x] LiveView Integration
+* [x] API Auth Middleware (Plug)
+* [x] Sensor Ingest Endpoint
+* [ ] [WIP] Sensor Simulator
+* [ ] [WIP] PubSub Streaming to Chart.js
 
 
 ## Motivation
