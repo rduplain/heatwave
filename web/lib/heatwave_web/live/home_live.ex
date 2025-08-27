@@ -1,27 +1,34 @@
-#
-# Status:   Ingest API is ready.
-# Next Up:  Convert this "Hello, world!" to stream real data.
-#
 defmodule HeatwaveWeb.HomeLive do
   use HeatwaveWeb, :live_view
 
+  alias Heatwave.Repo
+  alias Heatwave.Sensor
+  alias Phoenix.PubSub
+  alias HeatwaveWeb.SeriesManager
+  alias Heatwave.Temperature
+
   @theme :dark
 
-  @history 20
+  @history 30
   @interval 1_000
   @ymax 120
   @ymin 32
-
-  @count_demo 32
 
   @impl true
   def mount(_params, _session, socket) do
     if connected?(socket), do: Heatwave.Clock.start_link(self(), @interval, :tick)
 
+    manager =
+      Enum.reduce(Repo.all(Sensor), SeriesManager.new(@history), fn record, manager ->
+        SeriesManager.create(manager, record.sensor)
+      end)
+
+    if connected?(socket), do: PubSub.subscribe(Heatwave.PubSub, Temperature.topic())
+
     socket =
       assign(socket,
-        chart: initial_chart(),
-        count: @count_demo,
+        chart: SeriesManager.to_chart(manager),
+        manager: manager,
         theme: @theme,
         ymax: @ymax,
         ymin: @ymin
@@ -32,48 +39,29 @@ defmodule HeatwaveWeb.HomeLive do
 
   @impl true
   def handle_info(:tick, socket) do
-    socket = update(socket, :count, &(&1 + 1))
+    %{manager: manager} = socket.assigns
+    manager = SeriesManager.tick(manager)
+    chart = SeriesManager.to_chart(manager)
 
-    count = socket.assigns.count
-    chart = socket.assigns.chart
-
-    labels = (chart.labels || []) ++ [""]
-
-    labels = Enum.take(labels, -@history)
-
-    datasets =
-      for ds <- chart.datasets do
-        Map.update!(ds, :data, fn d ->
-          d = (d || []) ++ [count]
-          Enum.take(d, -@history)
-        end)
-      end
-
-    chart = %{chart | labels: labels, datasets: datasets}
     if connected?(socket), do: send(self(), {:push_chart, chart})
 
-    {:noreply, assign(socket, chart: chart)}
+    {:noreply, assign(socket, chart: chart, manager: manager)}
+  end
+
+  @impl true
+  def handle_info({:temperature, sensor, value}, socket) do
+    %{manager: manager} = socket.assigns
+    manager = SeriesManager.update(manager, sensor, value)
+    chart = SeriesManager.to_chart(manager)
+
+    if connected?(socket), do: send(self(), {:push_chart, chart})
+
+    {:noreply, assign(socket, chart: chart, manager: manager)}
   end
 
   @impl true
   def handle_info({:push_chart, chart}, socket) do
     {:noreply, push_event(socket, "chart:update", %{data: chart})}
-  end
-
-  defp initial_chart do
-    labels = for _ <- 1..@history, do: ""
-    data = for _ <- 1..@history, do: nil
-
-    %{
-      labels: labels,
-      datasets: [
-        %{
-          label: "Count",
-          data: data,
-          fill: false
-        }
-      ]
-    }
   end
 
   @impl true
@@ -84,10 +72,8 @@ defmodule HeatwaveWeb.HomeLive do
     <div data-theme={(@theme == :dark && "dark") || "light"}>
       <div class="min-h-screen flex items-center justify-center px-4 py-12">
         <div class="w-full max-w-5xl text-center">
-          <h1 class="text-4xl font-bold">Hello, world!</h1>
-          <div class="mt-6 text-5xl font-extrabold">{@count}</div>
           <div
-            id="count-chart"
+            id="chart"
             phx-hook="Chart"
             phx-update="ignore"
             class="mt-6 mx-auto"
@@ -95,7 +81,7 @@ defmodule HeatwaveWeb.HomeLive do
             data-chart-config={
               Jason.encode!(%{
                 type: "line",
-                data: initial_chart(),
+                data: SeriesManager.to_chart(@manager),
                 options: %{
                   responsive: true,
                   maintainAspectRatio: false,

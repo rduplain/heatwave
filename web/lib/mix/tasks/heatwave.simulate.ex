@@ -5,12 +5,12 @@ defmodule Mix.Tasks.Heatwave.Simulate do
   @shortdoc "Simulate sensors posting temperatures via HTTP."
   @moduledoc """
   Usage:
-    mix heatwave.simulate [--url http://localhost:4000] [--dt 2000] [--delta 0.5]
+    mix heatwave.simulate [--url http://localhost:4000] [--dt 2000] [--delta 1.5]
 
   Options:
     --url    Base URL of running Heatwave server, default http://localhost:4000.
     --dt     Milliseconds between temperature posts, default: 2000.
-    --delta  Max +/- degrees F per tick, default: 0.5.
+    --delta  Max +/- degrees F per tick, default: 1.5.
 
   Simulation reads all API keys from sensors table, runs one process per sensor.
   """
@@ -18,14 +18,14 @@ defmodule Mix.Tasks.Heatwave.Simulate do
   @default %{
     url: "http://localhost:4000",
     dt: 2000,
-    delta: 0.5
+    delta: 1.5
   }
 
   @temperature %{
     room: 70.0,
-    initial_step: 5.0,
-    min: 32.0,
-    max: 120.0
+    initial_step: @default.delta * 2,
+    min: 40.0,
+    max: 90.0
   }
 
   @impl true

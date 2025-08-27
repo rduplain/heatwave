@@ -9,6 +9,8 @@ defmodule Heatwave.Temperature do
     timestamps(type: :utc_datetime)
   end
 
+  def topic, do: __schema__(:source)
+
   def changeset(temperature, attrs) do
     temperature
     |> cast(attrs, [:sensor, :value])
