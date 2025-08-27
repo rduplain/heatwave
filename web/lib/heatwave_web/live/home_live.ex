@@ -16,7 +16,7 @@ defmodule HeatwaveWeb.HomeLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    if connected?(socket), do: :timer.send_interval(@interval, :tick)
+    if connected?(socket), do: Heatwave.Clock.start_link(self(), @interval, :tick)
 
     socket =
       assign(socket,
