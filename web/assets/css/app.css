@@ -18,3 +18,8 @@
     default: "false";
     --root-bg: #fff;
 }
+
+[data-theme="dark"],
+[data-theme="light"] {
+    --chart-grid: rgb(96, 96, 96, 0.15);
+}

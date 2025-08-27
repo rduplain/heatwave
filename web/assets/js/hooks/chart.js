@@ -8,6 +8,14 @@ export default {
             ? JSON.parse(this.el.dataset.chartConfig)
             : { type: 'line', data: { labels: [], datasets: [] }, options: {} };
 
+        const chartGridProperty = getComputedStyle(this.el).getPropertyValue('--chart-grid');
+        const chartGrid = (chartGridProperty || '').trim() || 'rgba(128, 128, 128, 0.25)';
+
+        const scales = config.options.scales;
+        scales.x = scales.x || {}; scales.y = scales.y || {};
+        scales.x.grid = Object.assign({}, scales.x.grid, { color: chartGrid });
+        scales.y.grid = Object.assign({}, scales.y.grid, { color: chartGrid });
+
         const create = () => {
             if (!window.Chart) {
                 setTimeout(create, 50);
