@@ -1,4 +1,5 @@
 defmodule HeatwaveWeb do
+  @moduledoc "Base module for project's web-related functionality."
   def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
 
   def router do

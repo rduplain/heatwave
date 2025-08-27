@@ -1,4 +1,5 @@
 defmodule Heatwave.Ingest do
+  @moduledoc "Create temperature records, notifying pubsub listeners."
   alias Heatwave.Repo
   alias Heatwave.Temperature
   alias Phoenix.PubSub

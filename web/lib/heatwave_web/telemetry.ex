@@ -1,4 +1,5 @@
 defmodule HeatwaveWeb.Telemetry do
+  @moduledoc "Phoenix-internal telemetry."
   use Supervisor
   import Telemetry.Metrics
 

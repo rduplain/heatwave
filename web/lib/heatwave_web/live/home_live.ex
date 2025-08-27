@@ -1,4 +1,5 @@
 defmodule HeatwaveWeb.HomeLive do
+  @moduledoc "Render chart dashboard."
   use HeatwaveWeb, :live_view
 
   alias Heatwave.Repo

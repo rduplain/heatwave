@@ -1,4 +1,5 @@
 defmodule Heatwave.Temperature do
+  @moduledoc "Temperature (degrees F) from a sensor at a given time."
   use Ecto.Schema
   import Ecto.Changeset
 

@@ -1,4 +1,12 @@
 defmodule HeatwaveWeb.SeriesManager do
+  @moduledoc """
+  Bookkeeping for multiple data series by name, generating Chart.js structure.
+
+  Data can come in at any time, so to preserve time-series continuity, simply
+  copy the last received value to carry the line forward (on the assumption
+  that data will arrive before long). Then when data does arrive, simply set
+  the latest value in the series to the new value.
+  """
   defstruct data: %{}, history: nil
 
   def new(history) do

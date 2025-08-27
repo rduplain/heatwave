@@ -1,4 +1,5 @@
 defmodule HeatwaveWeb.ValueController do
+  @moduledoc "Create temperature from a plaintext float."
   use HeatwaveWeb, :controller
 
   def create(%Plug.Conn{assigns: %{sensor: sensor}} = conn, _params) do

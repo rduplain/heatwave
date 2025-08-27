@@ -1,4 +1,5 @@
 defmodule Heatwave.Sensor do
+  @moduledoc "Sensor devices connecting as clients to publish data."
   use Ecto.Schema
   import Ecto.Changeset
 

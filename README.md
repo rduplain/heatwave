@@ -8,6 +8,11 @@ enjoy programming on the Erlang runtime.
 [liveview]: https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html
 
 
+<img src="web/doc/assets/sample.gif" alt="Sample" width="100%" height="auto">
+
+_30-second window streaming data from (primitive) simulation of nine sensors._
+
+
 ## Status
 
 * [x] Clean Code

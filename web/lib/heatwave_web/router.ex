@@ -1,4 +1,5 @@
 defmodule HeatwaveWeb.Router do
+  @moduledoc "Routing configuration for Phoenix."
   alias HeatwaveWeb.Plugs.SensorKey
   use HeatwaveWeb, :router
 

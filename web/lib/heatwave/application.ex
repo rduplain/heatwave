@@ -1,4 +1,5 @@
 defmodule Heatwave.Application do
+  @moduledoc "Phoenix entrypoint."
   use Application
 
   @impl true
