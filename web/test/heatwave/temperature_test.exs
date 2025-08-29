@@ -3,23 +3,23 @@ defmodule Heatwave.TemperatureTest do
 
   alias Heatwave.Temperature
 
-  test "allows values at boundaries" do
-    low = Temperature.changeset(%Temperature{}, %{sensor: "s1", value: 32.0})
+  test "changeset/2 validates min and max values" do
+    low = Temperature.changeset(%Temperature{}, %{sensor: "test", value: 32.0})
     assert low.valid?
 
-    high = Temperature.changeset(%Temperature{}, %{sensor: "s1", value: 120.0})
+    high = Temperature.changeset(%Temperature{}, %{sensor: "test", value: 120.0})
     assert high.valid?
   end
 
-  test "rejects values below minimum" do
-    cs = Temperature.changeset(%Temperature{}, %{sensor: "s1", value: 31.9})
-    assert %{value: [msg]} = errors_on(cs)
-    assert msg =~ "greater than or equal to 32"
+  test "changeset/2 invalidates low values" do
+    changeset = Temperature.changeset(%Temperature{}, %{sensor: "test", value: 31.9})
+    assert %{value: [msg]} = errors_on(changeset)
+    assert msg =~ "must be greater"
   end
 
-  test "rejects values above maximum" do
-    cs = Temperature.changeset(%Temperature{}, %{sensor: "s1", value: 120.1})
-    assert %{value: [msg]} = errors_on(cs)
-    assert msg =~ "less than or equal to 120"
+  test "changeset/2 invalidates high values" do
+    changeset = Temperature.changeset(%Temperature{}, %{sensor: "test", value: 120.1})
+    assert %{value: [msg]} = errors_on(changeset)
+    assert msg =~ "must be less"
   end
 end

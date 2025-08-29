@@ -11,7 +11,7 @@ defmodule HeatwaveWeb.HomeLiveTest do
     %{sensor1: sensor1, sensor2: sensor2}
   end
 
-  test "home has chart and series", %{conn: conn} do
+  test "GET / live view contains chart and series", %{conn: conn} do
     {:ok, _view, html} = live(conn, "/")
 
     assert html =~ "phx-hook=\"Chart\""
