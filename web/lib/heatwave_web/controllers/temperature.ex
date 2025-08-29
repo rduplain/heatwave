@@ -2,27 +2,48 @@ defmodule HeatwaveWeb.TemperatureController do
   @moduledoc "Create temperature from a plaintext float."
   use HeatwaveWeb, :controller
 
+  alias HeatwaveWeb.Error
+  alias Heatwave.Temperature
+  require Logger
+
   def create(%Plug.Conn{assigns: %{sensor: sensor}} = conn, _params) do
-    with {:ok, body, _conn} <- Plug.Conn.read_body(conn),
-         {:ok, value} <- parse_float(String.trim(body)),
-         {:ok, _t} <- Heatwave.Ingest.create_temperature(sensor, value) do
-      send_resp(conn, 204, "")
-    else
-      {:more, _partial, _conn} ->
-        send_resp(conn, 413, "Content Too Large")
+    {body, conn} = read(conn)
+    create_temperature(sensor, parse(String.trim(body)))
+    send_resp(conn, 204, "")
+  rescue
+    e in Error -> Error.respond(conn, e)
+  end
 
-      {:error, :invalid_float} ->
-        send_resp(conn, 400, "Bad Request. Provide a numeric value.")
-
-      {:error, _} ->
-        send_resp(conn, 400, "Bad Request")
+  defp read(conn) do
+    case Plug.Conn.read_body(conn) do
+      {:ok, body, conn} -> {body, conn}
+      {:more, _partial, _conn} -> raise Error.too_large()
+      {:error, _reason} -> raise Error.bad_request()
     end
   end
 
-  defp parse_float(s) do
-    case Float.parse(s) do
-      {f, ""} -> {:ok, f}
-      _ -> {:error, :invalid_float}
+  defp parse(text) do
+    case Float.parse(text) do
+      {value, ""} ->
+        if Temperature.valid?(value) do
+          value
+        else
+          raise Error.bad_request(Temperature.invalid_msg())
+        end
+
+      _ ->
+        raise Error.bad_request("Provide a numeric value.")
+    end
+  end
+
+  defp create_temperature(sensor, value) do
+    case Heatwave.Ingest.create_temperature(sensor, value) do
+      {:ok, temperature} ->
+        temperature
+
+      {:error, reason} ->
+        Logger.error("Failed to create temperature: #{inspect(reason)}")
+        raise Error.server_error()
     end
   end
 end

@@ -16,5 +16,8 @@ web:
 sim:
 	cd web; mix heatwave.simulate # Ctrl-C Ctrl-C to exit.
 
+test:
+	cd web; mix test
+
 .PHONY: web
 .SILENT:
