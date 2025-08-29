@@ -7,7 +7,7 @@ defmodule HeatwaveWeb.SeriesManagerTest do
     manager = SeriesManager.new(3) |> SeriesManager.create("temperature")
     assert Map.has_key?(manager.data, "temperature")
     assert length(manager.data["temperature"]) == 3
-    assert Enum.all?(manager.data["temperature"], &is_nil/1)
+    for value <- manager.data["temperature"], do: assert(is_nil(value))
   end
 
   test "tick/1 shifts all series and duplicates the last value" do
