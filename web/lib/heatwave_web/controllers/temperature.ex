@@ -1,4 +1,4 @@
-defmodule HeatwaveWeb.ValueController do
+defmodule HeatwaveWeb.TemperatureController do
   @moduledoc "Create temperature from a plaintext float."
   use HeatwaveWeb, :controller
 

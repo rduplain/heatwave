@@ -24,6 +24,6 @@ defmodule HeatwaveWeb.Router do
 
   scope "/", HeatwaveWeb do
     pipe_through :ingest
-    post "/value", ValueController, :create
+    post "/value", TemperatureController, :create
   end
 end
