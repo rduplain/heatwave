@@ -1,12 +1,12 @@
 all:
 	echo "Run in one terminal:"
-	echo 
+	echo
 	echo "    make web"
 	echo
 	echo "Then in another:"
-	echo 
+	echo
 	echo "    make sim"
-	echo 
+	echo
 
 web:
 	cd web; mix setup
