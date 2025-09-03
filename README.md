@@ -7,6 +7,7 @@ enjoy programming on the Erlang runtime.
 [elixir]:   https://elixir-lang.org/
 [liveview]: https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html
 
+The objective is to instrument HVAC refrigerant coils:
 
 <img src="web/doc/assets/sample.gif" alt="Sample" width="100%" height="auto">
 
