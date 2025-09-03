@@ -26,6 +26,18 @@ _30-second window streaming data from (primitive) simulation of nine sensors._
 * [x] PubSub Streaming to Chart.js
 
 
+## Usage
+
+See [web/](web) or just run `make`:
+
+```
+make web  # In one terminal.
+make sim  # In another.
+```
+
+View the running app at http://localhost:4000.
+
+
 ## Motivation
 
 We have minisplit HVAC, and have had something of a nightmare scenario: leaking
